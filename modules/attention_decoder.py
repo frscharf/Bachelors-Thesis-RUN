@@ -2,9 +2,13 @@ from __future__ import unicode_literals, print_function, division
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
-from modules.utils import sample_weights
+from modules.utils import sample_weights, embeddings
 import numpy
 
+"""is an LSTM generating a
+sequence of actions that the execution-system can
+perform, according to weights defined by an At-
+tention layer"""
 
 class AttnDecoderRNN(nn.Module):
     def __init__(self, model_settings):
@@ -15,6 +19,7 @@ class AttnDecoderRNN(nn.Module):
         self.dim_action = model_settings['dim_action']
         self.dropout_p = numpy.asscalar(model_settings['drop_out_rate'])
         self.ren_gen = torch.rand(self.dim_model)
+        #self.embedding = nn.Embedding.from_pretrained(embeddings)
         self.embedding = nn.Embedding(self.dim_action, self.dim_model)
 
         self.drop_out_layer_gen = Variable(self.ren_gen < self.dropout_p).double()

@@ -10,6 +10,13 @@ WorldStateProcesser constructs the world-state as a concatenation of current pos
 Each position is represented as a BOW. 
 """
 
+"""maps vari-
+ables to the entities on the map which are men-
+tioned in the sentence. The world-state represen-
+tation consists of two vectors, one representing the
+entities at the current position, and one represent-
+ing the entities in the path ahead"""
+
 
 class WorldStateProcesser(object):
     def __init__(self, map_current):

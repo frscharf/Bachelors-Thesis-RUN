@@ -40,7 +40,7 @@ def main():
     )
 
     parser.add_argument(
-        '-sr', '--SaveResults', required=False, action='store_true',
+        '-sr', '--SaveResults', required=True, action='store_true',
         help='Save Results (True/False, default is false)'
     )
 

@@ -4,6 +4,8 @@ import logging
 import time
 import copy
 import numpy
+import numpy as np
+
 import modules.data_processors as data_processers
 import modules.beam_search as beam_search
 import torch
@@ -35,9 +37,10 @@ def trainer(encoder_f, encoder_b, attn_decoder1, encoder_optimizer_f, encoder_op
 
     Emb_lang_sparse = torch.DoubleTensor(
         numpy.identity(model_settings['dim_lang']))
-
+    #print(seq_lang)
     xt_lang_forward = encoder_f.Emb_enc_forward[seq_lang]
     xt_lang_backward = encoder_b.Emb_enc_backward[seq_lang]
+    #xt_world = np.dot(input_variable_world, attn_decoder1.Emb_dec.unsqueeze(0))  # dot
     xt_world = torch.bmm(input_variable_world, attn_decoder1.Emb_dec.unsqueeze(0))  # dot
 
     for ei in range(input_variable_x_length):
@@ -343,8 +346,8 @@ def test_model(args):
         result = {
             'success': is_the_route_correct,
             'id': one_sample.id,
-            'path_ref': ref_path,
-            'path_gen': gen_top_path,
+            'path_ref': [(point.x, point.y, point.direction) for point in ref_path],
+            'path_gen': [(point.x, point.y, point.direction) for point in gen_top_path],
             'actions ref': data_process.seq_action_numpy,
             'actions gen': bs.get_actions_generated(),
             'instruction': one_sample.instruction,
@@ -352,6 +355,12 @@ def test_model(args):
 
         }
         bs_results.append(result)
+        #print(bs_results[0])
+        with open("./test_results_plt.txt", "a") as test_results:
+            for key in result.keys():
+                test_results.write(str(result[key]))
+                test_results.write("\n")
+            test_results.write("\n\n")
         #
         bs.refresh_state()
         #
@@ -393,8 +402,8 @@ def test_model(args):
         result = {
             'success': is_the_route_correct,
             'id': one_sample.id,
-            'path_ref': ref_path,
-            'path_gen': gen_top_path,
+            'path_ref': [(point.x, point.y, point.direction) for point in ref_path],
+            'path_gen': [(point.x, point.y, point.direction) for point in gen_top_path],
             'actions ref': data_process.seq_action_numpy,
             'actions gen': bs.get_actions_generated(),
             'instruction': one_sample.instruction,
@@ -402,11 +411,13 @@ def test_model(args):
         }
         bs_results.append(result)
 
+        #print(bs_results[0])
+
         bs.refresh_state()
 
     success_rate = round(1.0 * cnt_success / num_steps, 4)
 
-    if args.SaveResults:
+    if args.SaveResults or True:
         results_logs.info(bs_results)
 
     logger.info("the success_rate is {}: ".format(success_rate))
@@ -524,7 +535,7 @@ def test_model_multi_sentence(args):
 
     success_rate = round(1.0 * cnt_success / num_steps, 4)
 
-    if args.SaveResults:
+    if args.SaveResults or True:
         results_logs.info(bs_results)
 
     logger.info("the success_rate is {}: ".format(success_rate))

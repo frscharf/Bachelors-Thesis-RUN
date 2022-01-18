@@ -7,8 +7,9 @@ import logging
 
 class DataProcess(object):
     """
-    This class process raw data into a format that the model knows how to use
+    This class processes raw data into a format that the model knows how to use
     """
+    seq_lang_numpy: None
 
     def __init__(self, path_rawdata=None):
 
@@ -29,9 +30,10 @@ class DataProcess(object):
             self.maps = pickle.load(f, encoding='latin1')
 
         self.lang2idx = stats['word2ind']
-        self.dim_lang = stats['volsize']
+        self.dim_lang = stats['volsize'] #733
+        self.ind2word = {v: k for k, v in self.lang2idx.items()}
 
-        self.dim_world = 2 * 3 + 4 + 3 + 6
+        self.dim_world = 2 * 3 + 4 + 3 + 6 #19
         self.dim_action = 6
 
         self.names_map = raw_data.keys()

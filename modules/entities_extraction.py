@@ -28,6 +28,16 @@ THERSHOLD_SCORE = 90
 
 '''
 
+"""replacing phrases in the sentences
+which refer to previously unseen entities with vari-
+ables, prior to delivering the sentence to the En-
+coderVariables are
+typed (streets, restaurants, etc.) and are numbered
+based on their order of occurrence in the sentence.
+The numbering resets after every utterance, so the
+model remains with a handful of typed entity-
+variables"""
+
 
 def get_data():
     current_directory = os.getcwd()

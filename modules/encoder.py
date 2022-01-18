@@ -2,9 +2,13 @@ from __future__ import unicode_literals, print_function, division
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
-from  modules.utils import sample_weights
+from  modules.utils import sample_weights, embeddings_vec
 import numpy
 
+
+"""takes the sequence of words that
+assembles a single sentence and encodes it as a
+vector using a biLSTM"""
 
 class EncoderRNN_Forward(nn.Module):
     def __init__(self, model_settings):
@@ -13,7 +17,7 @@ class EncoderRNN_Forward(nn.Module):
         self.dim_model = numpy.asscalar(model_settings['dim_model'])
 
         # params
-        self.Emb_enc_forward = sample_weights(self.dim_lang, self.dim_model)
+        self.Emb_enc_forward = embeddings_vec() #sample_weights(733, 100)
         self.b_enc_forward = nn.Parameter(torch.DoubleTensor(numpy.zeros(4 * self.dim_model, )))
         self.W_enc_forward = sample_weights(2 * self.dim_model, 4 * self.dim_model)
 
