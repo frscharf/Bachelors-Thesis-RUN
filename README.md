@@ -25,6 +25,7 @@ $ pip install -r requirements.txt
 ```
 
 ### Instructions
+- Before running the model, please download the word embeddings here: [Word2Vec](https://drive.google.com/file/d/0B7XkCwpI5KDYNlNUTTlSS21pQmM/edit?resourcekey=0-wjGZdNAUop6WykTtMip30g)
  - Here are the instructions to use the code base:
  
 ##### Train Model:
