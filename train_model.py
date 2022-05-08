@@ -11,7 +11,7 @@ from logger import create_logger
 
 def main():
     parser = argparse.ArgumentParser(
-        description='Trainning model ... '
+        description='Training model ... '
     )
     #
 

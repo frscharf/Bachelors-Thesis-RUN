@@ -265,7 +265,7 @@ def train_model(args):
 
     logger.info("Total time it took: {}".format(end_time - start_time))
 
-    logger.info("finished training")
+    logger.info("finished training including PPA+PCA+PPA")
 
 
 def test_model(args):
